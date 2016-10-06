@@ -1,0 +1,33 @@
+
+SonicJumpLeft.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+oie_28181923ZyThGSkA
+  rotate: false
+  xy: 1, 5
+  size: 29, 25
+  orig: 29, 25
+  offset: 0, 0
+  index: -1
+oie_28181945vwrFmMtk
+  rotate: false
+  xy: 32, 5
+  size: 29, 25
+  orig: 29, 25
+  offset: 0, 0
+  index: -1
+oie_28181933fWDXkTWi
+  rotate: false
+  xy: 63, 1
+  size: 25, 29
+  orig: 25, 29
+  offset: 0, 0
+  index: -1
+oie_28181956IemJgHer
+  rotate: false
+  xy: 90, 1
+  size: 25, 29
+  orig: 25, 29
+  offset: 0, 0
+  index: -1
