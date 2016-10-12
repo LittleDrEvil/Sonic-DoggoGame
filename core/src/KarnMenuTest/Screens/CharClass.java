@@ -61,7 +61,11 @@ public class CharClass {
                 }
             }
             // }
-            
+
+            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+                vChar.x = 10;
+                vChar.y = 100;
+            }
             //Hit Testing {
         if (isHit(vChar.x, vChar.y, 30, 40, 0, 0, Gdx.graphics.getWidth()-30, 30)) {
             dSpeed = 0;
@@ -84,7 +88,10 @@ public class CharClass {
             dGravity = 0;
             System.out.println("side");
         }
-        
+        if(vChar.x > 400){
+            vChar.x -= fSx;
+            vChar.x = 399;
+        }
         // }
     }
 
@@ -114,7 +121,8 @@ public class CharClass {
         if (nJum == 0) {
             return nDir;
         }
-
+        
+        
         if (nJum == 1) {
             if (nDir == 2 || nDir == 1) {
                 return 4;

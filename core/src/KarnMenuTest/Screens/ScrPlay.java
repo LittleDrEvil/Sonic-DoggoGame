@@ -41,7 +41,7 @@ public class ScrPlay implements Screen, InputProcessor {
     float fSY, fSX, fBX=50, fBY=50, fX, fY, fBackX;
     double dGravity, dSpeed;
     Vector2 vSonic;
-
+    boolean bPass=false;
     public ScrPlay(GdxMenu _gdxMenu) {  //Referencing the main class.
         gdxMenu = _gdxMenu;
     }
@@ -69,21 +69,26 @@ public class ScrPlay implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(1, 0, 0, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         charSonic.update();
         batch.begin();
         elapsedTime += Gdx.graphics.getDeltaTime();
         batch.draw(imgBack, fBackX, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(imgBack, fBackX-Gdx.graphics.getWidth(), 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(imgBack, fBackX+Gdx.graphics.getWidth(), 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        if(fBackX < -Gdx.graphics.getWidth()){
+            fBackX=0;
+        }
         batch.draw(imgFloor, 0, 0, Gdx.graphics.getWidth()-30, 40);
         batch.draw(imgBlock, fBX, fBY, 30, 30);
         nDir = charSonic.Direction();
         batch.draw(charSonic.aniChar[nDir].getKeyFrame(elapsedTime, true), charSonic.vChar.x, charSonic.vChar.y);
         batch.end();
         
-        
-//            fBackX += charSonic.fSx;
-        
+        System.out.println(charSonic.fSx);
+            fBackX -= charSonic.fSx;
+            
             
     }
 
