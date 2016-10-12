@@ -12,11 +12,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import KarnMenuTest.GdxMenu;
 import KarnMenuTest.TbMenu;
 import KarnMenuTest.TbsMenu;
+import com.badlogic.gdx.graphics.Texture;
 
 import java.awt.Font;
 
 /**
- * Created by luke on 2016-04-05.
+ * Created by Luke on 2016-04-05.
  */
 
 public class ScrMenu implements Screen, InputProcessor {
@@ -26,7 +27,7 @@ public class ScrMenu implements Screen, InputProcessor {
     Stage stage;
     SpriteBatch batch;
     BitmapFont screenName;
-
+    Texture imgBack;
     public ScrMenu(GdxMenu _gdxMenu) {  //Referencing the main class.
         gdxMenu = _gdxMenu;
     }
@@ -42,10 +43,11 @@ public class ScrMenu implements Screen, InputProcessor {
         screenName = new BitmapFont();
         tbPlay = new TbMenu("PLAY", tbsMenu);
         tbGameover = new TbMenu("BACK", tbsMenu);
+        imgBack = new Texture(Gdx.files.internal("SonicStart.png"));
         tbGameover.setY(0);
         tbGameover.setX(0);
-        tbPlay.setY(0);
-        tbPlay.setX(440);
+        tbPlay.setY(30);
+        tbPlay.setX(220);
         stage.addActor(tbPlay);
         stage.addActor(tbGameover);
         Gdx.input.setInputProcessor(stage);
@@ -54,13 +56,9 @@ public class ScrMenu implements Screen, InputProcessor {
     }
 
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 1, 0, 1); //Green background.
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
-        screenName.draw(batch, "This is the MENU screen", 230, 275);
+        batch.draw(imgBack, 0,0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch.end();
-        stage.act();
-        stage.draw();
     }
 
     public void btnPlayListener() {
@@ -80,7 +78,7 @@ public class ScrMenu implements Screen, InputProcessor {
             }
         });
     }
-
+    
     @Override
     public void resize(int width, int height) {
 
@@ -145,4 +143,5 @@ public class ScrMenu implements Screen, InputProcessor {
     public boolean scrolled(int amount) {
         return false;
     }
+    
 }

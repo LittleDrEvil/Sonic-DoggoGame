@@ -12,15 +12,20 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import KarnMenuTest.GdxMenu;
 import KarnMenuTest.TbMenu;
 import KarnMenuTest.TbsMenu;
+import KarnMenuTest.Screens.BlockClass;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import java.util.ArrayList;
 
 /**
  * Created by Luke on 2016-04-05.
  */
 public class ScrPlay implements Screen, InputProcessor {
+    BlockClass bBlock;
+    ArrayList[] alBlocks; 
     GdxMenu gdxMenu;
     TbsMenu tbsMenu;
     TbMenu tbMenu, tbGameover;
@@ -33,7 +38,7 @@ public class ScrPlay implements Screen, InputProcessor {
     private float elapsedTime = 0;
     Texture imgFloor, imgBack, imgBlock;
     int nJum, nDir = 0, nAniCurr;
-    float fSY, fSX, fBX=50, fBY=30, fX, fY;
+    float fSY, fSX, fBX=50, fBY=50, fX, fY, fBackX;
     double dGravity, dSpeed;
     Vector2 vSonic;
 
@@ -62,18 +67,24 @@ public class ScrPlay implements Screen, InputProcessor {
         btnGameoverListener();
     }
 
+    @Override
     public void render(float delta) {
+        Gdx.gl.glClearColor(1, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         charSonic.update();
-        batch.begin(); 
-        
+        batch.begin();
         elapsedTime += Gdx.graphics.getDeltaTime();
-        batch.draw(imgBack, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(imgBack, fBackX, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch.draw(imgFloor, 0, 0, Gdx.graphics.getWidth()-30, 40);
         batch.draw(imgBlock, fBX, fBY, 30, 30);
         nDir = charSonic.Direction();
-        batch.draw(charSonic.aniSonic[nDir].getKeyFrame(elapsedTime, true), charSonic.x, charSonic.y);
-        
+        batch.draw(charSonic.aniChar[nDir].getKeyFrame(elapsedTime, true), charSonic.vChar.x, charSonic.vChar.y);
         batch.end();
+        
+        
+//            fBackX += charSonic.fSx;
+        
+            
     }
 
     public void btnGameoverListener() {
