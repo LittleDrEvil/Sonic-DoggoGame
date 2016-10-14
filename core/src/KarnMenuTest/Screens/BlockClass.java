@@ -12,7 +12,7 @@ public class BlockClass {
     Texture tBlock;
     float fX, fY;
     
-    public void BlockClass(Texture _tBlock, float _fX, float _fY){
+    public void BlockClass(Texture _tBlock, float _fX, float _fY, CharClass charChar){
         tBlock = _tBlock;
         fX= _fX;
         fY = _fY;

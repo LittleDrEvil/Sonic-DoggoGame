@@ -88,6 +88,9 @@ public class ScrPlay implements Screen, InputProcessor {
         System.out.println(fDist);
         if(fDist > 0) {
             fBackX -= charSonic.fSx;
+        } else if (fDist<0) {
+            charSonic.fSx = 0;
+            fDist = 0;
         }
             fDist += charSonic.fSx;
         

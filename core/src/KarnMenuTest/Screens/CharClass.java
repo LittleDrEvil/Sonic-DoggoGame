@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
 public class CharClass {
@@ -47,12 +48,11 @@ public class CharClass {
         fSX = vChar.x;
         dSpeed += dGravity;
         fDy += dSpeed;
-        fSx = round(fSx);
         vChar.add(fSx, fDy);
 
-        if (fSx < 0.1 && fSx > -0.1) {
-            fSx = 0;
-        }
+//        if (fSx < 0.1 && fSx > -0.1) {
+//            fSx = 0;
+//        }
         
         if (fSx > 0) {
             fSx -= 0.1;
@@ -62,7 +62,6 @@ public class CharClass {
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             fSx += 0.2;
-            sKeyRight = "Right";
         }
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             fSx -= 0.2;
@@ -81,7 +80,7 @@ public class CharClass {
             fSx = 199;
         }
         //Hit Testing {
-        if (isHit(vChar.x, vChar.y, 30, 40, 0, 0, Gdx.graphics.getWidth() - 30, 30)) {
+        if (isHit(vChar.x, vChar.y, 30, 40, 0, 0, Gdx.graphics.getWidth(), 30)) {
             dSpeed = 0;
             nJum = 0;
             vChar.y = fSY;
@@ -104,9 +103,9 @@ public class CharClass {
             dGravity = 0;
             System.out.println("side");
         }
-        if (vChar.x > 400) {
+        if (vChar.x > Gdx.graphics.getWidth()-150) {
             vChar.x -= fSx;
-            vChar.x = 399;
+            vChar.x =  Gdx.graphics.getWidth()-149;
         }
         if (vChar.x < 0) {
             vChar.x += fSx;
