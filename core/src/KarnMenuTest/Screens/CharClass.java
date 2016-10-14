@@ -44,15 +44,16 @@ public class CharClass {
 
     public void update() {
         //Gravity and Movement {
+        if (fSx < 0.01 && fSx > -0.01) {
+            fSx = 0;
+        }
         fSY = vChar.y;
         fSX = vChar.x;
         dSpeed += dGravity;
         fDy += dSpeed;
         vChar.add(fSx, fDy);
 
-//        if (fSx < 0.1 && fSx > -0.1) {
-//            fSx = 0;
-//        }
+        
         
         if (fSx > 0) {
             fSx -= 0.1;
@@ -107,10 +108,7 @@ public class CharClass {
             vChar.x -= fSx;
             vChar.x =  Gdx.graphics.getWidth()-149;
         }
-        if (vChar.x < 0) {
-            vChar.x += fSx;
-            vChar.x = 1;
-        }
+        
         // }
     }
 
@@ -191,8 +189,8 @@ public class CharClass {
 
     boolean isHitBlockT(float nX1, float nY1, float nS1, float nX2, float nY2, float nS2) {
 
-        if ((((nX1 <= nX2 + 3) && (nX1 + nS1 >= nX2 + 3))
-                || ((nX1 >= nX2) && (nX1 <= nX2 + nS2 - 3)))
+        if ((((nX1 <= nX2+1) && (nX1 + nS1 >= nX2-1))
+                || ((nX1 >= nX2-1) && (nX1 <= nX2 + nS2 + 1)))
                 && ((nY1 >= nY2 + 5) && (nY1 <= nY2 + 5 + nS2))) {
             return true;
         }

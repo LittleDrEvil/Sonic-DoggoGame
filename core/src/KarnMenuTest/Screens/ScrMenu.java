@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import KarnMenuTest.GdxMenu;
 import KarnMenuTest.TbMenu;
 import KarnMenuTest.TbsMenu;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 
 import java.awt.Font;
@@ -51,33 +52,43 @@ public class ScrMenu implements Screen, InputProcessor {
         stage.addActor(tbPlay);
         stage.addActor(tbGameover);
         Gdx.input.setInputProcessor(stage);
-        btnPlayListener();
-        btnGameoverListener();
+        
+//        btnPlayListener();
+//        btnGameoverListener();
     }
 
     public void render(float delta) {
         batch.begin();
         batch.draw(imgBack, 0,0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch.end();
+        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+            gdxMenu.currentState = gdxMenu.gameState.PLAY;
+            gdxMenu.updateState();
+        }
+        if(Gdx.input.isButtonPressed(Input.Buttons.RIGHT)){
+            gdxMenu.currentState = gdxMenu.gameState.OVER;
+            gdxMenu.updateState();
+        }
+        
     }
 
-    public void btnPlayListener() {
-        tbPlay.addListener(new ChangeListener() {
-            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                gdxMenu.currentState = gdxMenu.gameState.PLAY;
-                gdxMenu.updateState();
-            }
-        });
-    }
-
-    public void btnGameoverListener() {
-        tbGameover.addListener(new ChangeListener() {
-            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                gdxMenu.currentState = gdxMenu.gameState.OVER;
-                gdxMenu.updateState();
-            }
-        });
-    }
+//    public void btnPlayListener() {
+//        tbPlay.addListener(new ChangeListener() {
+//            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+//                gdxMenu.currentState = gdxMenu.gameState.PLAY;
+//                gdxMenu.updateState();
+//            }
+//        });
+//    }
+//
+//    public void btnGameoverListener() {
+//        tbGameover.addListener(new ChangeListener() {
+//            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+//                gdxMenu.currentState = gdxMenu.gameState.OVER;
+//                gdxMenu.updateState();
+//            }
+//        });
+//    }
     
     @Override
     public void resize(int width, int height) {
