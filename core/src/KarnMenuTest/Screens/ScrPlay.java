@@ -24,7 +24,9 @@ import java.util.ArrayList;
  * Created by Luke on 2016-04-05.
  */
 public class ScrPlay implements Screen, InputProcessor {
-    BlockClass bBlock;
+    Vector2 vBlo;
+    Vector2[] avB;
+    BlockClass[] bBlock = new BlockClass[10];
     ArrayList <BlockClass> alBlocks; 
     GdxMenu gdxMenu;
     TbsMenu tbsMenu;
@@ -42,16 +44,18 @@ public class ScrPlay implements Screen, InputProcessor {
     Vector2 vSonic;
     boolean bPass=false;
     
-    public ScrPlay(GdxMenu _gdxMenu) {  //Referencing the main class.
+    public ScrPlay(GdxMenu _gdxMenu) { 
+//Referencing the main class.
         gdxMenu = _gdxMenu;
     }
 
     public void show() {
+        avB = new Vector2[10];
         batch = new SpriteBatch();
         imgBack = new Texture(Gdx.files.internal("background.png"));
         imgFloor = new Texture(Gdx.files.internal("background1.png"));
         imgBlock = new Texture(Gdx.files.internal("block.png"));
-        charSonic.charMain("Sonic", "UP", "DOWN", "LEFT", "RIGHT");
+        charSonic.charMain("Sonic");
         stage = new Stage();
         tbsMenu = new TbsMenu();
         tbMenu = new TbMenu("BACK", tbsMenu);
@@ -65,41 +69,50 @@ public class ScrPlay implements Screen, InputProcessor {
         Gdx.input.setInputProcessor(stage);
         btnMenuListener();
         btnGameoverListener();
-        bBlock = new BlockClass();
-        bBlock.BlockClass(imgBlock, fX, fY, charSonic);
-//        alBlocks.add(bBlock);
+        vBlo = new Vector2();
         
-//        for (int i = 0; i < 10; i++) {
-//            BlockClass b = alBlocks.get(i);
-//            b.updateB();
-//        }
+        
+        for (int i = 0; i < 10; i++) {
+            avB[i] = new Vector2();
+            bBlock[i] = new BlockClass();
+            
+            vBlo.add(80*(i+1), 50);
+            avB[i].add(vBlo.x, vBlo.y);
+            bBlock[i].BlockClass(imgBlock, vBlo);
+            vBlo.add(-vBlo.x, -vBlo.y);
+        }
     }
 
     @Override
     public void render(float delta) {
+        
         charSonic.update();
+        for (int i = 0; i < 10; i++) {
+            charSonic = bBlock[i].update(charSonic,avB[i], fDist);
+        }
         batch.begin();
+        nDir = charSonic.Direction();
         elapsedTime += Gdx.graphics.getDeltaTime();
-        
-        batch.draw(imgBack, fBackX, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        batch.draw(imgBack, fBackX-Gdx.graphics.getWidth(), 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        batch.draw(imgBack, fBackX+Gdx.graphics.getWidth(), 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        
         if((fBackX < -Gdx.graphics.getWidth() || fBackX > Gdx.graphics.getWidth())){
             fBackX=0;
         }
         
+        batch.draw(imgBack, fBackX, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(imgBack, fBackX-Gdx.graphics.getWidth(), 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(imgBack, fBackX+Gdx.graphics.getWidth(), 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch.draw(imgFloor, fBackX, 0, Gdx.graphics.getWidth(), 40);
         batch.draw(imgFloor, fBackX-Gdx.graphics.getWidth(), 0, Gdx.graphics.getWidth(), 40);
         batch.draw(imgFloor, fBackX+Gdx.graphics.getWidth(), 0, Gdx.graphics.getWidth(), 40);
-        
-        batch.draw(imgBlock, fBX - fDist, fBY, 30, 30);
-        nDir = charSonic.Direction();
+        //batch.draw(imgBlock, fBX - fDist, fBY, 30, 30);
         batch.draw(charSonic.aniChar[nDir].getKeyFrame(elapsedTime, true), charSonic.vChar.x, charSonic.vChar.y);
-        
+        for (int i = 0; i < 10; i++) {
+            batch.draw(imgBlock, avB[i].x - fDist, avB[i].y, 30, 30);
+//            System.out.println(avB[i].toString());
+        }
         batch.end();
         
-        System.out.println(fDist);
+        //System.out.println(fDist);
+        
         if(fDist > 0) {
             fBackX -= charSonic.fSx;
         } else if (fDist<0) {
@@ -108,12 +121,12 @@ public class ScrPlay implements Screen, InputProcessor {
         }
         fDist += charSonic.fSx;
         
-        if (charSonic.vChar.x < 0 && fDist <= 150) {
+        if (charSonic.vChar.x < 0 && fDist <= 125) {
             charSonic.vChar.x += charSonic.fSx;
             charSonic.vChar.x = 1;
-        } else if (charSonic.vChar.x < 150 && fDist > 150){
+        } else if (charSonic.vChar.x < 125 && fDist > 125){
             charSonic.vChar.x += charSonic.fSx;
-            charSonic.vChar.x = 151;
+            charSonic.vChar.x = 126;
         }
             
         
