@@ -15,14 +15,13 @@ public class BlockClass extends Sprite  {
     Vector2 vB;
     CharClass charChar;
     SpriteBatch blockbatch;
-    public void BlockClass(Texture _tBlock, Vector2 _vB){
-        tBlock = _tBlock;
-        vB = _vB;
+    public void BlockClass(){
+        
     }
    
     CharClass update(CharClass chara, Vector2 vBlock, float fDist){
         
-        System.out.println(chara.fDy);
+//        System.out.println(chara.fDy);
         
         if(isHitBlockT(chara.vChar.x, chara.vChar.y , 30 ,vBlock.x - fDist, vBlock.y , 30)){
             
@@ -39,9 +38,9 @@ public class BlockClass extends Sprite  {
             chara.dSpeed = 0;
             chara.nJum = 0;
             chara.vChar.x = chara.fSX;
-            if(chara.vChar.x < vBlock.x - fDist)chara.vChar.x = chara.fSX-3;
+            if(chara.vChar.x < vBlock.x - fDist) chara.vChar.x = chara.fSX-1;
             
-            if(chara.vChar.x > vBlock.x - fDist)chara.vChar.x = chara.fSX+3;
+            if(chara.vChar.x > vBlock.x - fDist) chara.vChar.x = chara.fSX+1;
             
             chara.fSx = 0;
             chara.dGravity = 0;
@@ -82,7 +81,7 @@ public class BlockClass extends Sprite  {
 
         if ((((nX1 <= nX2+1) && (nX1 + nS1 >= nX2-1))
                 || ((nX1 >= nX2-1) && (nX1 <= nX2 + nS2 + 1)))
-                && ((nY1 >= nY2 + 5) && (nY1 <= nY2 + 5 + nS2))) {
+                && ((nY1 >= nY2 ) && (nY1 <= nY2 + nS2))) {
             return true;
         }
         return false;

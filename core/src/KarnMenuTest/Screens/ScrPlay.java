@@ -26,7 +26,7 @@ import java.util.ArrayList;
 public class ScrPlay implements Screen, InputProcessor {
     Vector2 vBlo;
     Vector2[] avB;
-    BlockClass[] bBlock = new BlockClass[10];
+    BlockClass[] bBlock;
     ArrayList <BlockClass> alBlocks; 
     GdxMenu gdxMenu;
     TbsMenu tbsMenu;
@@ -43,6 +43,7 @@ public class ScrPlay implements Screen, InputProcessor {
     double dGravity, dSpeed;
     Vector2 vSonic;
     boolean bPass=false;
+    int nBlockSize=100;;
     
     public ScrPlay(GdxMenu _gdxMenu) { 
 //Referencing the main class.
@@ -50,7 +51,9 @@ public class ScrPlay implements Screen, InputProcessor {
     }
 
     public void show() {
-        avB = new Vector2[10];
+        alBlocks = new ArrayList<BlockClass>();
+        bBlock = new BlockClass[nBlockSize];
+        avB = new Vector2[nBlockSize];
         batch = new SpriteBatch();
         imgBack = new Texture(Gdx.files.internal("background.png"));
         imgFloor = new Texture(Gdx.files.internal("background1.png"));
@@ -72,14 +75,27 @@ public class ScrPlay implements Screen, InputProcessor {
         vBlo = new Vector2();
         
         
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < nBlockSize/2; i++) {
+            
             avB[i] = new Vector2();
             bBlock[i] = new BlockClass();
             
-            vBlo.add(80*(i+1), 50);
+            vBlo.add(30*(i), 50);
             avB[i].add(vBlo.x, vBlo.y);
-            bBlock[i].BlockClass(imgBlock, vBlo);
+            bBlock[i].BlockClass();
             vBlo.add(-vBlo.x, -vBlo.y);
+            alBlocks.add(bBlock[i]);
+        }
+        for (int i = nBlockSize/2; i < nBlockSize; i++) {
+            avB[i] = new Vector2();
+            bBlock[i] = new BlockClass();
+            
+            vBlo.add(30*(i-50), 200);
+            
+            avB[i].add(vBlo.x, vBlo.y);
+            bBlock[i].BlockClass();
+            vBlo.add(-vBlo.x, -vBlo.y);
+            alBlocks.add(bBlock[i]);
         }
     }
 
@@ -87,7 +103,7 @@ public class ScrPlay implements Screen, InputProcessor {
     public void render(float delta) {
         
         charSonic.update();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < nBlockSize; i++) {
             charSonic = bBlock[i].update(charSonic,avB[i], fDist);
         }
         batch.begin();
@@ -105,7 +121,7 @@ public class ScrPlay implements Screen, InputProcessor {
         batch.draw(imgFloor, fBackX+Gdx.graphics.getWidth(), 0, Gdx.graphics.getWidth(), 40);
         //batch.draw(imgBlock, fBX - fDist, fBY, 30, 30);
         batch.draw(charSonic.aniChar[nDir].getKeyFrame(elapsedTime, true), charSonic.vChar.x, charSonic.vChar.y);
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < nBlockSize; i++) {
             batch.draw(imgBlock, avB[i].x - fDist, avB[i].y, 30, 30);
 //            System.out.println(avB[i].toString());
         }
