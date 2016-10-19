@@ -46,7 +46,7 @@ public class CharClass {
         fSX = vChar.x;
         dSpeed += dGravity;
         fDy += dSpeed;
-        vChar.add(fSx, fDy);
+        
         
         if (fSx > 0) {
             fSx -= 0.1;
@@ -70,7 +70,7 @@ public class CharClass {
         // }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            fSx = 199;
+            fSx = 100;
         }
         //Hit Testing {
 //        if (isHit(vChar.x, vChar.y, 30, 40, 0, 0, Gdx.graphics.getWidth(), 30)) {
@@ -107,7 +107,7 @@ public class CharClass {
             vChar.x -= fSx;
             vChar.x =  Gdx.graphics.getWidth()-149;
         }
-        
+        vChar.add(fSx, fDy);
         // }
     }
 

@@ -21,7 +21,6 @@ public class BlockClass extends Sprite  {
    
     CharClass update(CharClass chara, Vector2 vBlock, float fDist){
         
-//        System.out.println(chara.fDy);
         
         if(isHitBlockT(chara.vChar.x, chara.vChar.y , 30 ,vBlock.x - fDist, vBlock.y , 30)){
             
@@ -29,8 +28,7 @@ public class BlockClass extends Sprite  {
             chara.nJum = 0;
             chara.vChar.y = chara.fSY;
             chara.dGravity = 0.00;
-            System.out.println("top");
-            return chara;
+//            System.out.println("top");
             
         } else chara.dGravity = -0.01;
         
@@ -44,25 +42,12 @@ public class BlockClass extends Sprite  {
             
             chara.fSx = 0;
             chara.dGravity = 0;
-            System.out.println("side");
-            return chara;
+//            System.out.println("side");
         } 
         
         return chara;
     }
     
-    boolean isHit(float nX1, float nY1, float nW1, float nH1, float nX2, float nY2, float nW2, float nH2) {
-
-        if ((((nX1 <= nX2) && (nX1 + nW1 >= nX2))
-                || ((nX1 >= nX2) && (nX1 <= nX2 + nW2)))
-                && (((nY1 <= nY2) && (nY1 + nH1 >= nY2))
-                || ((nY1 >= nY2) && (nY1 <= nY2 + nH2)))) {
-            return true;
-        } else {
-            return (false);
-        }
-    }
-
     boolean isHitBlockLR(float nX1, float nY1, float nS1, float nX2, float nY2, float nS2) {
 
         if ((((nX1 <= nX2) && (nX1 + nS1 >= nX2))
