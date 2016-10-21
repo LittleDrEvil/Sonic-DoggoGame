@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
 public class CharClass {
@@ -17,12 +16,11 @@ public class CharClass {
     TextureAtlas textureAtlas1;
     int nDir = 0, nJum;
     float x, y = 100, fDy, fSY, fSX, fBX = 50, fBY = 50, fSx;
-    double dSpeed, dGravity;
+    double dSpeed, dGravity= -0.01;
 
     public void charMain(String sCharacter) {
         vFloor.nor();
         vChar.add(x, y);
-        dGravity = -0.01;
         textureAtlas1 = new TextureAtlas(Gdx.files.internal(sCharacter + "StillRight.pack"));
         aniChar[0] = new Animation(1 / 15f, textureAtlas1.getRegions());
         textureAtlas1 = new TextureAtlas(Gdx.files.internal(sCharacter + "StillLeft.pack"));
@@ -39,14 +37,10 @@ public class CharClass {
 
     public void update() {
         //Gravity and Movement {
-        if (fSx < 0.01 && fSx > -0.01) {
-            fSx = 0;
-        }
         fSY = vChar.y;
         fSX = vChar.x;
         dSpeed += dGravity;
         fDy += dSpeed;
-        
         
         if (fSx > 0) {
             fSx -= 0.1;
@@ -72,37 +66,7 @@ public class CharClass {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             fSx = 100;
         }
-        //Hit Testing {
-//        if (isHit(vChar.x, vChar.y, 30, 40, 0, 0, Gdx.graphics.getWidth(), 30)) {
-//            dSpeed = 0;
-//            nJum = 0;
-//            vChar.y = fSY;
-//            dGravity = 0;
-//        } else {
-//            dGravity = -0.01;
-//        }
-        if (isHitV(vChar, 30, 40, vFloor, Gdx.graphics.getWidth(), 30)) {
-            dSpeed = 0;
-            nJum = 0;
-            vChar.y = fSY;
-            dGravity = 0;
-        } else {
-            dGravity = -0.01;
-        }
-//        if (isHitBlockT(vChar.x, vChar.y, 30, fBX-=fSx, fBY, 30)) {
-//            dSpeed = 0;
-//            nJum = 0;
-//            vChar.y = fSY;
-//           // System.out.println("top ");
-//        }
-//        if (isHitBlockLR(vChar.x, vChar.y, 30, fBX-=fSx, fBY, 30)) {
-//            dSpeed = 0;
-//            nJum = 0;
-//            vChar.x = fSX;
-//            fSx = 0;
-//            dGravity = 0;
-//            System.out.println("side");
-//        }
+        
         if (vChar.x > Gdx.graphics.getWidth()-150) {
             vChar.x -= fSx;
             vChar.x =  Gdx.graphics.getWidth()-149;
@@ -111,10 +75,53 @@ public class CharClass {
         // }
     }
 
-    Animation aniSpr(Animation aniSon) {
-
-
-        return aniSon;
+    CharClass update1(CharClass chara, Vector2 vBlock, float fDist){
+        
+        if (isHitV(chara.vChar, 30, 40, chara.vFloor, Gdx.graphics.getWidth(), 40)) {
+            chara.dSpeed = 0;
+            chara.nJum = 0;
+            chara.dGravity = 0;
+            chara.vChar.y = 40 - chara.fDy;
+        } 
+        
+        
+        if(isHitBlockT(chara.vChar.x, chara.vChar.y , 30 ,vBlock.x - fDist, vBlock.y , 30)){
+            
+            chara.dSpeed = 0;
+            chara.nJum = 0;
+            chara.vChar.y = vBlock.y + 30 - chara.fDy;
+            chara.dGravity = 0.00;
+//            if(chara.vChar.y < vBlock.y){
+//                
+//            }
+//            if(chara.vChar.y > vBlock.y){
+//                
+//            }
+            
+        } 
+        
+        if(isHitBlockLR(chara.vChar.x, chara.vChar.y, 30, vBlock.x - fDist, vBlock.y, 30)){
+            chara.dSpeed = 0;
+            chara.nJum = 0;
+//            chara.vChar.x = chara.fSX- chara.fSx;
+            if(chara.vChar.x < vBlock.x - fDist) chara.vChar.x = chara.fSX-2;
+            
+            if(chara.vChar.x > vBlock.x - fDist) chara.vChar.x = chara.fSX+2;
+            
+            chara.fSx = 0;
+            chara.dGravity = 0;
+//            System.out.println("side");
+        } 
+        
+        
+        if (chara.vChar.x < 0 && fDist <= 125) {
+            chara.vChar.x += chara.fSx;
+            chara.vChar.x = 1;
+        } else if (chara.vChar.x < 125 && fDist > 125){
+            chara.vChar.x += chara.fSx;
+            chara.vChar.x = 126;
+        }
+        return chara;
     }
 
     int Direction() {
@@ -150,7 +157,7 @@ public class CharClass {
 
     boolean isHit(float nX1, float nY1, float nW1, float nH1, float nX2, float nY2, float nW2, float nH2) {
 
-        if ((((nX1 <= nX2) && (nX1 + nW1 >= nX2))
+        if ((((nX1 <= nX2+5) && (nX1 + nW1 + 5>= nX2))
                 || ((nX1 >= nX2) && (nX1 <= nX2 + nW2)))
                 && (((nY1 <= nY2) && (nY1 + nH1 >= nY2))
                 || ((nY1 >= nY2) && (nY1 <= nY2 + nH2)))) {
@@ -171,7 +178,6 @@ public class CharClass {
             return (false);
         }
     }
-    
 
     boolean isHitBlockLR(float nX1, float nY1, float nS1, float nX2, float nY2, float nS2) {
 
@@ -197,3 +203,35 @@ public class CharClass {
         return false;
     }
 }
+// Unneeded hittest code, hittest put into blockclass
+//Hit Testing {
+//        if (isHit(vChar.x, vChar.y, 30, 40, 0, 0, Gdx.graphics.getWidth(), 30)) {
+//            dSpeed = 0;
+//            nJum = 0;
+//            vChar.y = fSY;
+//            dGravity = 0;
+//        } else {
+//            dGravity = -0.01;
+//        }
+//        if (isHitV(vChar, 30, 40, vFloor, Gdx.graphics.getWidth(), 30)) {
+//            dSpeed = 0;
+//            nJum = 0;
+//            vChar.y = fSY;
+//            dGravity = 0;
+//        } else {
+//            dGravity = -0.01;
+//        }
+//        if (isHitBlockT(vChar.x, vChar.y, 30, fBX-=fSx, fBY, 30)) {
+//            dSpeed = 0;
+//            nJum = 0;
+//            vChar.y = fSY;
+//           // System.out.println("top ");
+//        }
+//        if (isHitBlockLR(vChar.x, vChar.y, 30, fBX-=fSx, fBY, 30)) {
+//            dSpeed = 0;
+//            nJum = 0;
+//            vChar.x = fSX;
+//            fSx = 0;
+//            dGravity = 0;
+//            System.out.println("side");
+//        }

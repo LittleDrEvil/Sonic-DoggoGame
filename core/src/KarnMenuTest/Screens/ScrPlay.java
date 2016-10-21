@@ -26,8 +26,6 @@ import java.util.ArrayList;
 public class ScrPlay implements Screen, InputProcessor {
     Vector2 vBlo;
     Vector2[] avB;
-    BlockClass[] bBlock;
-    ArrayList <BlockClass> alBlocks; 
     GdxMenu gdxMenu;
     TbsMenu tbsMenu;
     TbMenu tbMenu, tbGameover;
@@ -43,7 +41,7 @@ public class ScrPlay implements Screen, InputProcessor {
     double dGravity, dSpeed;
     Vector2 vSonic;
     boolean bPass=false;
-    int nBlockSize=400;
+    int nBlockSize=10;
     
     public ScrPlay(GdxMenu _gdxMenu) { 
 //Referencing the main class.
@@ -51,8 +49,6 @@ public class ScrPlay implements Screen, InputProcessor {
     }
 
     public void show() {
-        alBlocks = new ArrayList<BlockClass>();
-        bBlock = new BlockClass[nBlockSize];
         avB = new Vector2[nBlockSize];
         batch = new SpriteBatch();
         imgBack = new Texture(Gdx.files.internal("background.png"));
@@ -87,39 +83,33 @@ public class ScrPlay implements Screen, InputProcessor {
 //            alBlocks.add(bBlock[i]);
 //        }
         for (int i = 0; i < nBlockSize; i++) {
-            
             avB[i] = new Vector2();
-            bBlock[i] = new BlockClass();
-            
-            vBlo.add(60*(i), 50);
+            vBlo.add(70*i, 40*(i+1));
             avB[i].add(vBlo.x, vBlo.y);
-            bBlock[i].BlockClass();
             vBlo.add(-vBlo.x, -vBlo.y);
-            alBlocks.add(bBlock[i]);
         }
 //        for (int i = nBlockSize/2; i < nBlockSize; i++) {
 //            avB[i] = new Vector2();
-//            bBlock[i] = new BlockClass();
 //            
 //            vBlo.add(30*(i-nBlockSize/2), 200);
 //            
 //            avB[i].add(vBlo.x, vBlo.y);
-//            bBlock[i].BlockClass();
 //            vBlo.add(-vBlo.x, -vBlo.y);
-//            alBlocks.add(bBlock[i]);
 //        }
     }
 
     @Override
     public void render(float delta) {
-        
-        charSonic.update();
+        charSonic.dGravity = -0.01;
         for (int i = 0; i < nBlockSize; i++) {
-            charSonic = bBlock[i].update(charSonic,avB[i], fDist);
+            charSonic = charSonic.update1(charSonic,avB[i], fDist);
         }
+        charSonic.update();
+        
         batch.begin();
         nDir = charSonic.Direction();
         elapsedTime += Gdx.graphics.getDeltaTime();
+        
         if((fBackX < -Gdx.graphics.getWidth() || fBackX > Gdx.graphics.getWidth())){
             fBackX=0;
         }
@@ -130,14 +120,14 @@ public class ScrPlay implements Screen, InputProcessor {
         batch.draw(imgFloor, fBackX, 0, Gdx.graphics.getWidth(), 40);
         batch.draw(imgFloor, fBackX-Gdx.graphics.getWidth(), 0, Gdx.graphics.getWidth(), 40);
         batch.draw(imgFloor, fBackX+Gdx.graphics.getWidth(), 0, Gdx.graphics.getWidth(), 40);
-        batch.draw(charSonic.aniChar[nDir].getKeyFrame(elapsedTime, true), charSonic.vChar.x, charSonic.vChar.y);
+        batch.draw(charSonic.aniChar[nDir].getKeyFrame
+                (elapsedTime, true), charSonic.vChar.x, charSonic.vChar.y);
+        
         for (int i = 0; i < nBlockSize; i++) {
             batch.draw(imgBlock, avB[i].x - fDist, avB[i].y, 30, 30);
-//            System.out.println(avB[i].toString());
         }
-        batch.end();
         
-        //System.out.println(fDist);
+        batch.end();
         
         if(fDist > 0) {
             fBackX -= charSonic.fSx;
@@ -145,15 +135,16 @@ public class ScrPlay implements Screen, InputProcessor {
             charSonic.fSx = 0;
             fDist = 0;
         }
-        fDist += charSonic.fSx;
         
-        if (charSonic.vChar.x < 0 && fDist <= 125) {
-            charSonic.vChar.x += charSonic.fSx;
-            charSonic.vChar.x = 1;
-        } else if (charSonic.vChar.x < 125 && fDist > 125){
-            charSonic.vChar.x += charSonic.fSx;
-            charSonic.vChar.x = 126;
-        }
+        fDist += charSonic.fSx;
+//        
+//        if (charSonic.vChar.x < 0 && fDist <= 125) {
+//            charSonic.vChar.x += charSonic.fSx;
+//            charSonic.vChar.x = 1;
+//        } else if (charSonic.vChar.x < 125 && fDist > 125){
+//            charSonic.vChar.x += charSonic.fSx;
+//            charSonic.vChar.x = 126;
+//        }
             
         
     }
