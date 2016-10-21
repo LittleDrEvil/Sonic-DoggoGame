@@ -1,0 +1,75 @@
+
+SonicRunLeft.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+3r
+  rotate: false
+  xy: 1, 1
+  size: 39, 35
+  orig: 39, 35
+  offset: 0, 0
+  index: -1
+4r
+  rotate: false
+  xy: 42, 1
+  size: 39, 35
+  orig: 39, 35
+  offset: 0, 0
+  index: -1
+8r
+  rotate: false
+  xy: 83, 3
+  size: 41, 33
+  orig: 41, 33
+  offset: 0, 0
+  index: -1
+9r
+  rotate: false
+  xy: 126, 3
+  size: 41, 33
+  orig: 41, 33
+  offset: 0, 0
+  index: -1
+2r
+  rotate: false
+  xy: 169, 1
+  size: 34, 35
+  orig: 34, 35
+  offset: 0, 0
+  index: -1
+5r
+  rotate: false
+  xy: 205, 1
+  size: 34, 35
+  orig: 34, 35
+  offset: 0, 0
+  index: -1
+1r
+  rotate: false
+  xy: 241, 4
+  size: 34, 32
+  orig: 34, 32
+  offset: 0, 0
+  index: -1
+6r
+  rotate: false
+  xy: 277, 4
+  size: 34, 32
+  orig: 34, 32
+  offset: 0, 0
+  index: -1
+0r
+  rotate: false
+  xy: 313, 4
+  size: 31, 32
+  orig: 31, 32
+  offset: 0, 0
+  index: -1
+7r
+  rotate: false
+  xy: 313, 4
+  size: 31, 32
+  orig: 31, 32
+  offset: 0, 0
+  index: -1

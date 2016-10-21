@@ -1,0 +1,75 @@
+
+SonicRunRight.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+3
+  rotate: false
+  xy: 1, 1
+  size: 39, 35
+  orig: 39, 35
+  offset: 0, 0
+  index: -1
+4
+  rotate: false
+  xy: 42, 1
+  size: 39, 35
+  orig: 39, 35
+  offset: 0, 0
+  index: -1
+8
+  rotate: false
+  xy: 83, 3
+  size: 41, 33
+  orig: 41, 33
+  offset: 0, 0
+  index: -1
+9
+  rotate: false
+  xy: 126, 3
+  size: 41, 33
+  orig: 41, 33
+  offset: 0, 0
+  index: -1
+2
+  rotate: false
+  xy: 169, 1
+  size: 34, 35
+  orig: 34, 35
+  offset: 0, 0
+  index: -1
+5
+  rotate: false
+  xy: 205, 1
+  size: 34, 35
+  orig: 34, 35
+  offset: 0, 0
+  index: -1
+1
+  rotate: false
+  xy: 241, 4
+  size: 34, 32
+  orig: 34, 32
+  offset: 0, 0
+  index: -1
+6
+  rotate: false
+  xy: 277, 4
+  size: 34, 32
+  orig: 34, 32
+  offset: 0, 0
+  index: -1
+0
+  rotate: false
+  xy: 313, 4
+  size: 31, 32
+  orig: 31, 32
+  offset: 0, 0
+  index: -1
+7
+  rotate: false
+  xy: 313, 4
+  size: 31, 32
+  orig: 31, 32
+  offset: 0, 0
+  index: -1
